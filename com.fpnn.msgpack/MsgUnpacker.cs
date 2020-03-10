@@ -34,12 +34,8 @@ namespace com.fpnn.msgpack
                 throw new InvalidDataException("Incomplete msgPack binary data.", e);
             }
 
-            if (info.GetRootObject() is ContainerInfo containerInfo)
-            {
-                object container = containerInfo.GetContainer();
-                if (container is Dictionary<Object, Object> dict)
-                    return dict;
-            }
+            if (info.GetRootObject() is Dictionary<Object, Object> dict)
+                return dict;
 
             throw new InvalidDataException("MsgPack binary is not dictionary.");
         }
@@ -154,7 +150,7 @@ namespace com.fpnn.msgpack
 
             public void AddContainer(ContainerInfo container)
             {
-                Add(container);
+                Add(container.GetContainer());
                 containerStack.Push(container);
             }
 
